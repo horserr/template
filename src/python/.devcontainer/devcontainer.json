@@ -28,9 +28,9 @@
   "remoteUser": "vscode",
 
   // change workspace folder
-  "workspaceFolder": "/home/vscode/workspace",
+  // "workspaceFolder": "/home/vscode/workspace",
   // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.config/.dotfiles,type=bind,consistency=cached",
-  "workspaceMount": "source=dev,target=/home/vscode/workspace,type=volume",
+  // "workspaceMount": "source=dev,target=/home/vscode/workspace,type=volume",
 
   // "mounts": [],
   // Features to add to the dev container. More info: https://containers.dev/features.
@@ -60,7 +60,8 @@
   // "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh -m http://mirrors.nju.edu.cn/ubuntu/",
   // NOTE: requires ghcr.io/horserr/base to contain the baked-in lifecycle scripts.
   // Install uv or pixi depending on the template "target" option.
-  "onCreateCommand": "if [ \"${templateOption:target}\" = \"uv\" ]; then curl -LsSf https://astral.sh/uv/install.sh | sh; elif [ \"${templateOption:target}\" = \"pixi\" ]; then curl -fsSL https://pixi.sh/install.sh | bash; fi",
+  // "onCreateCommand": "if [ \"${templateOption:target}\" = \"uv\" ]; then curl -LsSf https://astral.sh/uv/install.sh | sh; elif [ \"${templateOption:target}\" = \"pixi\" ]; then curl -fsSL https://pixi.sh/install.sh | bash; fi",
+  "onCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && curl -fsSL https://pixi.sh/install.sh | bash",
 
   // This command is the second of three that finalizes container setup when a dev container is created. It executes inside the container after onCreateCommand whenever new content is available in the source tree during the creation process.
   // "updateContentCommand": "npm install"
