@@ -4,5 +4,8 @@
       "fileMatch": ["**/devcontainer-template.json"],
       "url": "./.vscode/schemas/devcontainer-template.schema.json"
     }
+  ],
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/release.yaml"
   ]
 }

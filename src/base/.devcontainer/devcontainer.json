@@ -1,14 +1,15 @@
 {
   "name": "base",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "ghcr.io/horserr/base:${templateOption:imageVariant}",
-  // "build": {
-  //   "context": "..",
-  //   // "network": "host",
-  //   "args": {
-  //     // "APT_MIRROR": "http://mirrors.nju.edu.cn/ubuntu/"
-  //   }
-  // },
+
+  "build": {
+    "dockerfile": "Containerfile",
+    "context": ".."
+    // "network": "host",
+    // "args": {
+    //   "APT_MIRROR": "http://mirrors.nju.edu.cn/ubuntu/"
+    // }
+  },
 
   "runArgs": [
     // note: cannot use host network for wslc
@@ -63,8 +64,8 @@
   // useful for basic or global environment changing
   // only has system information, no user information
   // this command optionally changes apt mirror
-  // "onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/onCreate.sh -m http://mirrors.nju.edu.cn/ubuntu/",
-  "onCreateCommand": "${containerWorkspaceFolder}/.devcontainer/onCreate.sh",
+  // "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh -m http://mirrors.nju.edu.cn/ubuntu/",
+  "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh",
 
   // This command is the second of three that finalizes container setup when a dev container is created. It executes inside the container after onCreateCommand whenever new content is available in the source tree during the creation process.
   // It will execute at least once, but cloud services will also periodically execute the command to refresh cached or prebuilt containers. Like cloud services using onCreateCommand, it can only take advantage of repository and org scoped secrets or permissions.
@@ -77,7 +78,10 @@
   // has user information
   // usefule for customizations and clone private repo
   // initialize chezmoi and apply
-  "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreate.sh"
+  // NOTE: postCreate.sh runs `chezmoi init ...`, and its chezmoi install line is
+  // commented out — make sure chezmoi exists in ghcr.io/horserr/base, otherwise
+  // this command will fail with exit code 127.
+  "postCreateCommand": "/usr/local/share/devcontainer/postCreate.sh"
 
   // A command to run each time the container is successfully started.
   // useful for starting daemon
