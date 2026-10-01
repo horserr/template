@@ -1,0 +1,16 @@
+{
+  "id": "base",
+  "version": "0.0.1",
+  "name": "basic dev container",
+  "description": "basic dev container",
+  "publisher": "horserr",
+  "options": {
+    "imageVariant": {
+      "type": "string",
+      "description": "Dec container tag",
+      "enum": ["latest"],
+      "default": "latest"
+    }
+  },
+  "keywords": ["ubunut", "base"]
+}
