@@ -1,0 +1,85 @@
+{
+  "name": "Python",
+
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  "build": {
+    "dockerfile": "Containerfile",
+    "context": "..",
+    // Select the Containerfile target via the template "target" option.
+    "target": "${templateOption:target}"
+    // "network": "host"
+  },
+
+  "runArgs": [
+    // note: cannot use host network for wslc
+    // use this domain for windows host: host.docker.internal
+    // "--network=host"
+  ],
+
+  "containerEnv": {
+    "GITHUB_USERNAME": "horserr",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}",
+    "GITHUB_ACCESS_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+  "remoteUser": "vscode",
+
+  // change workspace folder
+  "workspaceFolder": "/home/vscode/workspace",
+  // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.config/.dotfiles,type=bind,consistency=cached",
+  "workspaceMount": "source=dev-python,target=/home/vscode/workspace,type=volume",
+
+  "mounts": [
+    // apt Docker volume
+    // "source=apt-cache-archive,target=/var/cache/apt/archives,type=volume",
+    // "source=apt-cache-lists,target=/var/lib/apt/lists,type=volume"
+  ],
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // Configure tool-specific properties.
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.eol": "\n"
+      },
+      "extensions": ["FanaticPythoner.better-todo-tree"]
+    }
+  },
+
+  // A command string or list of command arguments to run on the host machine during initialization, including during container creation and on subsequent starts. The command may run more than once during a given session.
+  // ⚠️ The command is run wherever the source code is located on the host. For cloud services, this is in the cloud.
+  // "initializeCommand": "chezmoi verify && chezmoi apply --force",
+
+  // This command is the first of three (along with updateContentCommand and postCreateCommand) that finalizes container setup when a dev container is created. It and subsequent commands execute inside the container immediately after it has started for the first time.
+  // useful for basic or global environment changing
+  // only has system information, no user information
+  // this command optionally changes apt mirror
+  // "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh -m http://mirrors.nju.edu.cn/ubuntu/",
+  // NOTE: requires ghcr.io/horserr/base to contain the baked-in lifecycle scripts.
+  "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh",
+
+  // This command is the second of three that finalizes container setup when a dev container is created. It executes inside the container after onCreateCommand whenever new content is available in the source tree during the creation process.
+  // "updateContentCommand": "npm install"
+
+  // This command is the last of three that finalizes container setup when a dev container is created. It happens after updateContentCommand and once the dev container has been assigned to a user for the first time.
+  // initialize chezmoi and apply
+  // NOTE: postCreate.sh runs `chezmoi init ...`, and its chezmoi install line is
+  // commented out — make sure chezmoi exists in ghcr.io/horserr/base, otherwise
+  // this command will fail with exit code 127.
+  "postCreateCommand": "/usr/local/share/devcontainer/postCreate.sh"
+
+  // A command to run each time the container is successfully started.
+  // "postStartCommand": "",
+
+  // A command to run each time a tool has successfully attached to the container.
+  // "postAttachCommand" :""
+
+  // An enum that specifies the command any tool should wait for before connecting. Defaults to updateContentCommand.
+  // "waitFor" :""
+}

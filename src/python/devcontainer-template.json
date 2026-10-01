@@ -1,0 +1,17 @@
+{
+  "id": "python",
+  "version": "0.0.1",
+  "name": "Python with uv or pixi",
+  "description": "Choose between uv and pixi",
+  "publisher": "horserr",
+  "options": {
+    "target": {
+      "type": "string",
+      "description": "Containerfile build target (base = plain base image, uv = base + uv, pixi = base + pixi).",
+      "enum": ["uv", "pixi", "base"],
+      "default": "uv"
+    }
+  },
+  "platforms": ["Python"],
+  "keywords": ["uv", "python", "venv", "pixi", "astral", "ruff"]
+}
