@@ -30,7 +30,7 @@
   // change workspace folder
   "workspaceFolder": "/home/vscode/workspace",
   // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.config/.dotfiles,type=bind,consistency=cached",
-  "workspaceMount": "source=dev-base,target=/home/vscode/workspace,type=volume",
+  "workspaceMount": "source=dev,target=/home/vscode/workspace,type=volume",
 
   "mounts": [
     // apt Docker volume

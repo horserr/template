@@ -1,14 +1,15 @@
 {
   "name": "dev-Python",
 
+  "image": "ghcr.io/horserr/base:latest",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "build": {
-    "dockerfile": "Containerfile",
-    "context": "..",
-    // Select the Containerfile target via the template "target" option.
-    "target": "${templateOption:target}"
-    // "network": "host"
-  },
+  // "build": {
+  //   "dockerfile": "Containerfile",
+  //   "context": "..",
+  //   // Select the Containerfile target via the template "target" option.
+  //   "target": "${templateOption:target}"
+  //   // "network": "host"
+  // },
 
   "runArgs": [
     // note: cannot use host network for wslc
@@ -29,9 +30,9 @@
   // change workspace folder
   "workspaceFolder": "/home/vscode/workspace",
   // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.config/.dotfiles,type=bind,consistency=cached",
-  // "workspaceMount": "source=dev-python,target=/home/vscode/workspaces,type=volume",
+  "workspaceMount": "source=dev,target=/home/vscode/workspace,type=volume",
 
-  "mounts": ["source=dev-python,target=/home/vscode/workspace,type=volume"],
+  // "mounts": [],
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
 
@@ -58,7 +59,8 @@
   // this command optionally changes apt mirror
   // "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh -m http://mirrors.nju.edu.cn/ubuntu/",
   // NOTE: requires ghcr.io/horserr/base to contain the baked-in lifecycle scripts.
-  "onCreateCommand": "/usr/local/share/devcontainer/onCreate.sh",
+  // Install uv or pixi depending on the template "target" option.
+  "onCreateCommand": "if [ \"${templateOption:target}\" = \"uv\" ]; then curl -LsSf https://astral.sh/uv/install.sh | sh; elif [ \"${templateOption:target}\" = \"pixi\" ]; then curl -fsSL https://pixi.sh/install.sh | bash; fi",
 
   // This command is the second of three that finalizes container setup when a dev container is created. It executes inside the container after onCreateCommand whenever new content is available in the source tree during the creation process.
   // "updateContentCommand": "npm install"
@@ -68,7 +70,7 @@
   // NOTE: postCreate.sh runs `chezmoi init ...`, and its chezmoi install line is
   // commented out — make sure chezmoi exists in ghcr.io/horserr/base, otherwise
   // this command will fail with exit code 127.
-  "postCreateCommand": "/usr/local/share/devcontainer/postCreate.sh"
+  "postCreateCommand": "chezmoi init --source=~/.config/.dotfiles --apply $GITHUB_USERNAME"
 
   // A command to run each time the container is successfully started.
   // "postStartCommand": "",
