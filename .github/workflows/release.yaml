@@ -1,6 +1,19 @@
 name: "Release Dev Container Templates & Generate Documentation"
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - ".github/workflows/release.yaml"
   workflow_dispatch:
+
+# Never run two releases at once; keep pushes serialized but don't cancel a
+# publish that is already in flight (a cancelled publish could leave a partial
+# set of versions in GHCR).
+concurrency:
+  group: release-templates-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
