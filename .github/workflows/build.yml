@@ -15,6 +15,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
+  # Fixed name: src/python/.devcontainer/Containerfile pulls ghcr.io/horserr/base:<variant>
+  IMAGE_NAME: base
 
 jobs:
   build-and-push-image:
@@ -32,7 +34,7 @@ jobs:
 
       - name: Compute lowercase image name
         id: image
-        run: echo "name=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+        run: echo "name=${GITHUB_REPOSITORY_OWNER,,}/${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Log in to the Container registry
         uses: docker/login-action@v4
@@ -50,11 +52,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ steps.image.outputs.name }}
           tags: |
-            type=ref,event=branch
+            type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=sha
 
       - name: Build and push Docker image
         id: push
