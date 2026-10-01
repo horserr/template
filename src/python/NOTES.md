@@ -1,4 +1,4 @@
-## Build target
+# Build target
 
 The `target` option selects the build stage in `.devcontainer/Containerfile`:
 

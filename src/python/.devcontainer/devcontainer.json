@@ -1,5 +1,5 @@
 {
-  "name": "Python",
+  "name": "dev-Python",
 
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "build": {
@@ -29,13 +29,9 @@
   // change workspace folder
   "workspaceFolder": "/home/vscode/workspace",
   // "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/.config/.dotfiles,type=bind,consistency=cached",
-  "workspaceMount": "source=dev-python,target=/home/vscode/workspace,type=volume",
+  // "workspaceMount": "source=dev-python,target=/home/vscode/workspaces,type=volume",
 
-  "mounts": [
-    // apt Docker volume
-    // "source=apt-cache-archive,target=/var/cache/apt/archives,type=volume",
-    // "source=apt-cache-lists,target=/var/lib/apt/lists,type=volume"
-  ],
+  "mounts": ["source=dev-python,target=/home/vscode/workspace,type=volume"],
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
 
