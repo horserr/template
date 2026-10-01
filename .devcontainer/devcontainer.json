@@ -1,0 +1,31 @@
+{
+  "name": "Template",
+  "dockerFile": "Containerfile",
+
+  "containerEnv": {
+    "GITHUB_USERNAME": "horserr",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}",
+    "GITHUB_ACCESS_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {
+      // Debian 13 "trixie" 不提供 moby-cli 等包，必须关闭 moby 才能安装成功
+      "moby": false
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // "terminal.integrated.defaultProfile.linux": "fish",
+        // do not need this setting for host network
+        "http.useLocalProxyConfiguration": false
+      },
+      "extensions": ["mads-hartmann.bash-ide-vscode"]
+    }
+  },
+
+  // "postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreate.sh"
+  "postCreateCommand": "chezmoi init --source=~/.config/.dotfiles --apply $GITHUB_USERNAME"
+}

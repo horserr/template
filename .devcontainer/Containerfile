@@ -1,0 +1,9 @@
+FROM mcr.microsoft.com/devcontainers/javascript-node
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt,sharing=locked \
+  apt-get update
+
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+RUN npm install -g @devcontainers/cli
