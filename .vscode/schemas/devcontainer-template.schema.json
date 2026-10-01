@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dev Container Template Metadata",
+  "description": "Metadata for a Development Container Template, stored in 'devcontainer-template.json' at the root of the Template folder. See https://containers.dev/implementors/templates/",
+  "type": "object",
+  "default": {},
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "markdownDescription": "ID of the Template.\n\nThe `id` should be unique in the context of the repository/published package where the Template exists, and **must match the name of the directory** where the `devcontainer-template.json` resides."
+    },
+    "version": {
+      "type": "string",
+      "markdownDescription": "The [semantic version](https://semver.org/) of the Template.",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))?$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Name of the Template."
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the Template."
+    },
+    "documentationURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Url that points to the documentation of the Template."
+    },
+    "licenseURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Url that points to the license of the Template."
+    },
+    "publisher": {
+      "type": "string",
+      "description": "Name of the publisher/maintainer of the Template."
+    },
+    "keywords": {
+      "type": "array",
+      "description": "List of strings relevant to a user that would search for this Template.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "platforms": {
+      "type": "array",
+      "description": "Languages and platforms supported by the Template.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "optionalPaths": {
+      "type": "array",
+      "markdownDescription": "Files or directories that tooling may consider \"optional\" when applying a Template. Before applying the Template, tooling must inspect this property and prompt the user on whether each entry should be included in the resulting output workspace folder. Paths are relative to the root of the Template source directory.\n\n- Single file: full relative path, without leading or trailing path delimiters (e.g. `GETTING-STARTED.md`).\n- Directory: full relative path with a trailing `/*` (e.g. `.github/*`). The directory and its children are recursively ignored.",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "anyOf": [
+          {
+            "pattern": "^\\*$|^[^/\\\\]+(?:/[^/\\\\]+)*$"
+          },
+          {
+            "pattern": "^[^/\\\\]+(?:/[^/\\\\]+)*/\\*$"
+          }
+        ],
+        "markdownDescription": "A single file path (e.g. `GETTING-STARTED.md`, `example-project-1/MyProject.csproj`) or a directory path ending in `/*` (e.g. `.github/*`)."
+      },
+      "uniqueItems": true
+    },
+    "options": {
+      "type": "object",
+      "description": "A map of option IDs and their related configuration settings. Supporting tools use these to prompt the user to choose from different Template configuration options.",
+      "default": {},
+      "additionalProperties": {
+        "$ref": "#/definitions/templateOption"
+      }
+    }
+  },
+  "required": ["id", "version", "name", "description"],
+  "additionalProperties": false,
+  "definitions": {
+    "templateOption": {
+      "type": "object",
+      "description": "Configuration for a single Template option. The option ID (the property name) is used by supporting tools to replace `${templateOption:optionId}` references in the files within the sub-directory of the Template.",
+      "default": {},
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["boolean", "string"],
+          "description": "Type of the option. Valid types are currently: 'boolean' and 'string'."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description for the option."
+        },
+        "proposals": {
+          "type": "array",
+          "description": "A list of suggested string values. Free-form values are allowed. Omit when using 'enum'.",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "enum": {
+          "type": "array",
+          "description": "A strict list of allowed string values. Free-form values are not allowed. Omit when using 'proposals'.",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "default": {
+          "description": "Default value for the option.",
+          "type": ["string", "boolean"]
+        }
+      },
+      "additionalProperties": false,
+      "not": {
+        "required": ["proposals", "enum"]
+      }
+    }
+  }
+}
