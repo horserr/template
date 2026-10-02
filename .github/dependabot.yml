@@ -1,0 +1,7 @@
+version: 2
+updates:
+  # Configuration for Dev Container Features
+  - package-ecosystem: "devcontainers"
+    directory: "/" # Looks for .devcontainer/devcontainer.json relative to root
+    schedule:
+      interval: "weekly" # Options: daily, weekly, monthly
