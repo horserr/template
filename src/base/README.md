@@ -3,11 +3,7 @@
 
 basic dev container
 
-## Options
 
-| Options Id | Description | Type | Default Value |
-|-----|-----|-----|-----|
-| imageVariant | Dec container tag | string | latest |
 
 
 
