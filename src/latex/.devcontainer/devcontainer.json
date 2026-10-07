@@ -1,0 +1,23 @@
+{
+  "name": "Latex",
+  "image": "registry.gitlab.com/islandoftex/images/texlive:latest",
+
+  "containerEnv": {
+    "GITHUB_USERNAME": "horserr",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}",
+    "GITHUB_ACCESS_TOKEN": "${localEnv:GH_TOKEN}"
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // "terminal.integrated.defaultProfile.linux": "fish",
+        // do not need this setting for host network
+        "http.useLocalProxyConfiguration": false
+      },
+      "extensions": ["James-Yu.latex-workshop"]
+    }
+  },
+
+  "postCreateCommand": "sh -c \"$(curl -fsLS get.chezmoi.io)\" -- -b /usr/local/bin && chezmoi init --source=~/.config/.dotfiles --apply $GITHUB_USERNAME"
+}

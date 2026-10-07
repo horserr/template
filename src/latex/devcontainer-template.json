@@ -1,0 +1,8 @@
+{
+  "id": "latex",
+  "version": "0.0.1",
+  "name": "Latex template",
+  "description": "latex template for devcontainers",
+  "publisher": "horserr",
+  "keywords": ["latex"]
+}
