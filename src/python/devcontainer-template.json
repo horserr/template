@@ -1,6 +1,6 @@
 {
   "id": "python",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "name": "Python with uv or pixi",
   "description": "Choose between uv and pixi",
   "publisher": "horserr",
